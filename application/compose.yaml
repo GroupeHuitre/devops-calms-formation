@@ -1,0 +1,9 @@
+# Environnement local décrit as code : s'inscrit dans une démarche IaC,
+# mais Docker Compose n'est pas un outil IaC de provisionnement comme Terraform ou OpenTofu.
+services:
+  novatech-demo:
+    build: .
+    environment:
+      NOVATECH_HOST: "0.0.0.0"
+    ports:
+      - "127.0.0.1:8000:8000"

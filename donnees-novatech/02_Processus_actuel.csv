@@ -1,0 +1,7 @@
+etape,temps_actif_heures,attente_heures,hypothese_a_verifier
+Specification,2,6,Attente priorisation
+Developpement,12,4,Attente revue
+Revue de code,2,10,Disponibilite reviewers
+Tests,3,24,Environnement de test non partage
+Validation changement,1,36,Validation par lots
+Deploiement,2,8,Fenetre de mise en production
