@@ -1,0 +1,30 @@
+# CI NovaTech pour GitLab (équivalent du workflow GitHub .github/workflows/ci.yml)
+stages: [test, notify]
+
+tests:
+  stage: test
+  image: python:3.12-slim
+  script:
+    - cd application
+    - python -m unittest discover -s tests -v
+
+secrets:
+  stage: test
+  image:
+    name: ghcr.io/gitleaks/gitleaks:latest
+    entrypoint: [""]
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+    - gitleaks git . --redact --no-banner
+
+# ChatOps simulé : message affiché dans le journal du pipeline, sans webhook externe
+notification_chatops:
+  stage: notify
+  image: alpine:3.20
+  when: on_failure
+  script:
+    - echo "CI NovaTech en échec - branche ${CI_COMMIT_REF_NAME} - commit ${CI_COMMIT_SHORT_SHA}"
+    - echo "Pipeline ${CI_PIPELINE_URL}"
+    - echo "Action attendue - l'auteur du commit corrige ou annule le changement"

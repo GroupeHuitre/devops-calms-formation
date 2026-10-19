@@ -1,0 +1,38 @@
+name: CI NovaTech
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Tests unitaires
+        working-directory: application
+        run: python -m unittest discover -s tests -v
+      - name: Notification ChatOps simulée (sans webhook externe)
+        if: failure()
+        env:
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          {
+            echo "## CI NovaTech en échec"
+            echo "- Branche : ${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+            echo "- Commit : ${COMMIT_SHA}"
+            echo "- Run : ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- Action attendue : l'auteur du commit corrige ou annule le changement"
+          } >> "$GITHUB_STEP_SUMMARY"
+  secrets:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Recherche de secrets (gitleaks)
+        run: docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:latest git /repo --redact --no-banner
