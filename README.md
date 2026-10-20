@@ -1,8 +1,8 @@
 # Découvrir et mettre en place Devops 
 
-## Dépôt d'apprentissage du groupe XX
+## Dépôt d'apprentissage du groupe 08
 
-**Équipe (prenoms des 3 personnes) :** … 
+**Équipe (prenoms des 3 personnes) : Nicolas.P Adam.B Morgan Romain
 
 ## Démarrage : créer le dépôt de votre groupe 
 
