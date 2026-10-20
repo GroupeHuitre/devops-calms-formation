@@ -55,5 +55,5 @@ Découvrir DevOps par la recherche, l'expérimentation et une proposition de tra
 - Tableau Kanban (lien) : [Lien](https://github.com/orgs/GroupeHuitre/projects/4)
 - Issues (lien) : [Lien](https://github.com/GroupeHuitre/devops-calms-formation/issues)
 - Politique de revue : [Lien](https://github.com/GroupeHuitre/devops-calms-formation/blob/J1/docs/review_policy.md)
-- Définition de « terminé » : [Lien](ttps://github.com/GroupeHuitre/devops-calms-formation/blob/J1/docs/definition_of_done.md)
+- Définition de « terminé » : [Lien](https://github.com/GroupeHuitre/devops-calms-formation/blob/J1/docs/definition_of_done.md)
 - Répartition des responsabilités et rotation : [Lien](https://emineoeducation-my.sharepoint.com/:x:/r/personal/morgan_relano_supdevinci-edu_fr/_layouts/15/Doc.aspx?sourcedoc=%7B288DF664-D932-462F-A2EE-BADCE50A85D2%7D&file=Roles_RACI.xlsx&action=default&mobileredirect=true)
