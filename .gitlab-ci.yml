@@ -18,7 +18,7 @@ secrets:
   script:
     - git config --global --add safe.directory "$CI_PROJECT_DIR"
     - gitleaks git . --redact --no-banner
-
+    - gitleaks dir . --redact --no-banner
 # ChatOps simulé : message affiché dans le journal du pipeline, sans webhook externe
 notification_chatops:
   stage: notify
