@@ -18,7 +18,7 @@ Endpoints : `/health` et `/products`. La fonction `total_price` sert aux tests ;
 
 ## Expérience
 
-1. Exécuter les tests et noter le résultat.
+1. Exécuter les tests et noter le résultat.\
 ![alt text](cas_passant_image.png)
 2. Modifier volontairement un attendu du test `test_total` (par exemple attendre `39.0`) et constater l'échec : `AssertionError: 38.0 != 39.0`.
 ![alt text](cas_non_passant_image.png)
