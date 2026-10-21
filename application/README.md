@@ -19,7 +19,9 @@ Endpoints : `/health` et `/products`. La fonction `total_price` sert aux tests ;
 ## Expérience
 
 1. Exécuter les tests et noter le résultat.
+![alt text](cas_passant_image.png)
 2. Modifier volontairement un attendu du test `test_total` (par exemple attendre `39.0`) et constater l'échec : `AssertionError: 38.0 != 39.0`.
+![alt text](cas_non_passant_image.png)
 3. Conserver les preuves de l'échec, restaurer le bon attendu et vérifier le succès.
 4. Pousser en branche : la CI déjà présente à la racine du dépôt (`.github/workflows/ci.yml` ou `.gitlab-ci.yml`) lance les tests, une recherche de secrets (gitleaks) et, en cas d'échec, une notification ChatOps simulée. Ouvrir une revue et relever les liens vers les runs.
 5. Facultatif : si Docker est disponible, `docker compose up --build -d`, vérifier `/health`, `docker compose ps` (état `healthy`), puis `docker compose down`.
