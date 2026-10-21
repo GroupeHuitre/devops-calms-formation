@@ -1,6 +1,8 @@
 import unittest
 from app import total_price, PRODUCTS
 
+aws_access_key_id = "AKIAIOSFODNN7EXAMPLE"
+
 class NovaTechTests(unittest.TestCase):
     def test_total(self):
         self.assertEqual(total_price(2, 19.0), 38.0)
