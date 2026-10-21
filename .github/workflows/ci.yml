@@ -39,7 +39,7 @@ jobs:
               '{content: ("🔴 **CI NovaTech en échec**\nBranche : " + $branch + "\nCommit : " + $commit + "\nRun : " + $url)}')
             curl -sf -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
           else
-            echo "::warning::DISCORD_WEBHOOK_URL non configuré — notification réelle non envoyée, voir le résumé ci-dessus"
+            echo "::warning::DISCORD_WEBHOOK_URL non configuré, notification réelle non envoyée, voir le résumé ci-dessus"
           fi
   secrets:
     runs-on: ubuntu-24.04
