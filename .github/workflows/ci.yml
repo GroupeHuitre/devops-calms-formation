@@ -16,18 +16,31 @@ jobs:
       - name: Tests unitaires
         working-directory: application
         run: python -m unittest discover -s tests -v
-      - name: Notification ChatOps simulée (sans webhook externe)
+      - name: Notification ChatOps (Discord)
         if: failure()
         env:
           COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
+          BRANCH="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           {
             echo "## CI NovaTech en échec"
-            echo "- Branche : ${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+            echo "- Branche : ${BRANCH}"
             echo "- Commit : ${COMMIT_SHA}"
-            echo "- Run : ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- Run : ${RUN_URL}"
             echo "- Action attendue : l'auteur du commit corrige ou annule le changement"
           } >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            PAYLOAD=$(jq -n \
+              --arg branch "$BRANCH" \
+              --arg commit "$COMMIT_SHA" \
+              --arg url "$RUN_URL" \
+              '{content: ("🔴 **CI NovaTech en échec**\nBranche : " + $branch + "\nCommit : " + $commit + "\nRun : " + $url)}')
+            curl -sf -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
+          else
+            echo "::warning::DISCORD_WEBHOOK_URL non configuré — notification réelle non envoyée, voir le résumé ci-dessus"
+          fi
   secrets:
     runs-on: ubuntu-24.04
     steps:
