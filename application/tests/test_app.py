@@ -3,7 +3,7 @@ from app import total_price, PRODUCTS
 
 class NovaTechTests(unittest.TestCase):
     def test_total(self):
-        self.assertEqual(total_price(2, 19.0), 39.0) #39 to test the breaking apps for the webhook, 38 is the good value
+        self.assertEqual(total_price(2, 19.0), 38.0)
 
     def test_reject_zero_quantity(self):
         with self.assertRaises(ValueError):
