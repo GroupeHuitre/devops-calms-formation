@@ -1,9 +1,6 @@
 import unittest
 from app import total_price, PRODUCTS
 
-***REMOVED***
-***REMOVED***
-
 class NovaTechTests(unittest.TestCase):
     def test_total(self):
         self.assertEqual(total_price(2, 19.0), 38.0)

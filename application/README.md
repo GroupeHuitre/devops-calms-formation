@@ -24,7 +24,10 @@ Endpoints : `/health` et `/products`. La fonction `total_price` sert aux tests ;
 ![alt text](cas_non_passant_image.png)
 3. Conserver les preuves de l'échec, restaurer le bon attendu et vérifier le succès.
 4. Pousser en branche : la CI déjà présente à la racine du dépôt (`.github/workflows/ci.yml` ou `.gitlab-ci.yml`) lance les tests, une recherche de secrets (gitleaks) et, en cas d'échec, une notification ChatOps simulée. Ouvrir une revue et relever les liens vers les runs.
-![alt text](image.png)
+![alt text](cas_ci_restauration_image.png)
+Cas d'un problème de clef :
+![alt text](probleme_ci_secret_image.png)
+![alt text](fausse_clef_aws_image.png)
 5. Facultatif : si Docker est disponible, `docker compose up --build -d`, vérifier `/health`, `docker compose ps` (état `healthy`), puis `docker compose down`.
 
 ## Fichiers
