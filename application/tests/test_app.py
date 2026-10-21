@@ -1,7 +1,7 @@
 import unittest
 from app import total_price, PRODUCTS
 
-aws_access_key_id = "AKIAIOSFODNN7EXAMPLE"
+aws_access_key_id = "GG7TrlSE9BaIBFOnm2QXR173eYpPyR6IIWaPN5oT3tL"
 
 class NovaTechTests(unittest.TestCase):
     def test_total(self):

@@ -5,7 +5,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlsplit
 
 PRODUCTS = [{"id": 1, "name": "Guide DevOps", "price": 19.0}]
-aws_access_key_id = "AKIAIOSFODNN7EXAMPLE"
+aws_access_key_id = "GG7TrlSE9BaIBFOnm2QXR173eYpPyR6IIWaPN5oT3tL"
 
 def total_price(quantity, unit_price):
     if not isinstance(quantity, int) or isinstance(quantity, bool) or quantity <= 0:
