@@ -1,7 +1,7 @@
 name: CI NovaTech
 on:
   push:
-    branches: [main]
+    branches: [main,J2_testing]
   pull_request:
 permissions:
   contents: read
