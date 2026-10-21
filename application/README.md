@@ -27,6 +27,7 @@ Endpoints : `/health` et `/products`. La fonction `total_price` sert aux tests ;
 ![alt text](cas_ci_restauration_image.png)
 Cas d'un problème de clef :
 ![alt text](probleme_ci_secret_image.png)
+avec les clefs suivantes :\
 ![alt text](fausse_clef_aws_image.png)
 5. Facultatif : si Docker est disponible, `docker compose up --build -d`, vérifier `/health`, `docker compose ps` (état `healthy`), puis `docker compose down`.
 
