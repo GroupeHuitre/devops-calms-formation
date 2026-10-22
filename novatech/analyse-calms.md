@@ -2,10 +2,26 @@
 
 | Dimension | Fait ou hypothèse NovaTech | Action | Responsable | Mesure | Risque/limite |
 |---|---|---|---|---|---|
-| Culture | | | | | |
-| Automation | | | | | |
-| Lean | | | | | |
-| Measurement | | | | | |
-| Sharing | | | | | |
+| **Culture** | *Fait* : l'exploitante découvre des changements la veille de la mise en production ; la sécurité ne sait pas toujours qui valide les exceptions (`01_Contexte_et_temoignages.md`). | Instaurer une synchronisation courte Dev/Ops avant toute mise en production, et une revue d'incident sans blâme systématique après chaque incident (voir `experiences/retour-incident.md`). | Coordination tournante du jour (`plan-travail.md`) ; à terme, un référent « changement » désigné chez NovaTech. | Délai entre la décision d'un changement et sa communication aux autres équipes (actuellement ≈ 1 jour selon le témoignage, cible à définir). | *Hypothèse non prouvée* comme cause de l'incident du 16/10 ; changer les habitudes peut rencontrer de la résistance (cf. module 4, Q4.8). |
+| **Automation** | *Fait* : les tests et la recherche de secrets sont déjà automatisés en CI (`ci.yml`, job `tests` + `secrets`/gitleaks) ; la notification d'échec est désormais un vrai webhook Discord (voir `experiences/chatops.md`). *Fait* : la validation des changements reste manuelle et par lots (36 h d'attente, `02_Processus_actuel.csv`). | Étendre l'automatisation aux contrôles DevSecOps (SAST/SCA) et classer les changements à faible risque pour une approbation automatique, en gardant la validation humaine pour les changements à fort impact (module de paiement). | Membre en charge du module 5/CI. | Taux de changements traités en voie automatisée vs comité manuel ; nombre de notifications Discord envoyées par semaine. | Gitleaks ne détecte que des secrets déjà au format reconnaissable dans le code versionné, pas les dépendances vulnérables, ni un secret diffusé ailleurs (log, chat). Automatiser sans classifier le risque pourrait laisser passer un changement dangereux. |
+| **Lean** | *Fait* : 80 % du délai de livraison est de l'attente (88 h / 110 h), concentrée sur « Validation changement » (36 h) et « Tests » (24 h) (`novatech/value-stream-map.md`). | Expérience PDCA : remplacer la validation par lots par une validation continue sur une période test, mesurer l'effet. | Coordination du jour + relecteur. | Attente moyenne (heures) à l'étape « Validation changement », avant/après l'essai. | On ne sait pas si cette étape est le vrai goulot au sens de la théorie des contraintes : aucune donnée de capacité/débit disponible (cf. module 2, Q2.5). |
+| **Measurement** | *Fait* : la direction déclare elle-même ne pas savoir si le problème vient des outils, des process ou de la collaboration (témoignage) ; aucune métrique DORA n'est encore calculée pour NovaTech. | Calculer les cinq métriques DORA sur `04_Deploiements_fictifs.csv` (module 7) et construire un tableau de bord simple combinant DORA et observabilité. | Membre en charge du module 7. | Fréquence de déploiement, lead time médian, change fail rate, deployment rework rate, temps de restauration. | Risque de loi de Goodhart : transformer une métrique en objectif manipulable (cf. module 7, Q7.7) ; jeu de données fictif limité à 20 déploiements. |
+| **Sharing** | *Fait* : chaque fonction (métier, Dev, Ops, sécurité) agit en silo, l'incident du 16/10 l'illustre directement. *Fait nouveau* : une notification technique est maintenant partagée automatiquement en cas d'échec CI (webhook Discord réel, testé le 2026-10-21). | Étendre le partage au-delà des alertes techniques : un calendrier des changements visible par Dev, Ops et métier avant la mise en production. | Coordination du jour. | Nombre de changements communiqués à l'avance vs découverts tardivement par une autre équipe. | Un partage non filtré peut devenir du bruit et réduire l'attention de l'équipe (cf. module 4, Q4.6), distinguer information utile de notification systématique. |
 
 ## Liens avec le framework DevOps Three Ways
+
+- **Flow :** les actions Automation et Lean ci-dessus visent à réduire les 88 h d'attente du processus actuel.
+- **Feedback :** la notification ChatOps réelle (Discord, déclenchée sur échec CI) est un exemple concret de boucle de feedback accélérée, remplaçant un futur résumé consulté manuellement par une alerte immédiate.
+- **Continual Learning & Experimentation :** la revue d'incident sans blâme (`experiences/retour-incident.md`) et l'essai PDCA (dimension Lean) incarnent cette troisième voie.
+
+## DevSecOps « shift left » (TP3, étape 4)
+
+Le job `secrets` de `ci.yml` lance **gitleaks** sur l'historique Git à chaque push/PR.
+- **Ce qu'il détecte :** des motifs correspondant à des formats de secrets connus (clés API, tokens) déjà commités dans le code versionné.
+- **Ce qu'il ne couvre pas :** les dépendances tierces vulnérables (nécessiterait un scan SCA, cf. module 5 Q5.5/Q5.8), les droits excessifs du pipeline lui-même, et les secrets déjà diffusés ailleurs qu'en Git (log, message, capture d'écran).
+
+Le `Dockerfile` de `application/` applique deux choix justifiés :
+- **Utilisateur non root :** limite ce qu'un processus compromis dans le conteneur peut faire sur l'hôte ou le reste du conteneur.
+- **`HEALTHCHECK` :** permet de détecter automatiquement un service dégradé (ex. via `docker compose ps`), au lieu d'attendre qu'un client signale le problème, point directement lié à l'incident du 16/10, découvert par les clients avant toute alerte interne.
+
+**Limite à documenter :** ces contrôles réduisent des risques connus, ils ne garantissent ni l'absence de vulnérabilité ni la sécurité du pipeline CI/CD lui-même (cf. module 5, Q5.8).

@@ -8,7 +8,7 @@
 
 Une seule personne du groupe crée le dépôt, puis invite les deux autres membres **et le formateur**. Le dépôt doit être **privé**.
 
-**Option A — GitHub (recommandée)**
+**Option A - GitHub (recommandée)**
 
 1. Sur la page du dépôt modèle, cliquer sur **Use this template** → **Create a new repository**.
 2. Nom : `novatech-groupe-XX` (XX = numéro de votre groupe, de 01 à 08). Visibilité : **Private**.
@@ -16,7 +16,7 @@ Une seule personne du groupe crée le dépôt, puis invite les deux autres membr
 4. Chaque membre clone le dépôt du groupe : `git clone <URL du dépôt du groupe>`.
 5. Vérifier l'onglet **Actions** : le workflow « CI NovaTech » doit être vert après le premier push.
 
-**Option B — GitLab**
+**Option B - GitLab**
 
 1. Créer un projet vide : **New project → Create blank project**, nom `novatech-groupe-XX`, visibilité **Private**, sans README.
 2. Copier le modèle dans ce projet :
