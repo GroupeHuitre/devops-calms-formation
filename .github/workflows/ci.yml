@@ -1,7 +1,7 @@
 name: CI NovaTech
 on:
   push:
-    branches: [main]
+    branches: [J3_DEMO__DO_NOT_MERGE] #Normalement dois toujours être pour main.
   pull_request:
 permissions:
   contents: read
